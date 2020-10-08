@@ -146,7 +146,7 @@ Learn more about the options available for `head`, in the [vue-meta documentat
 
 ## External Resources
 
-You can include external resources such as scripts and fonts by adding them globally to the `nuxt.config.js` or locally in the `head` object or function.
+You can include external resources such as scripts and fonts by adding them globally to the `nuxt.config.js` or locally in the `head` **object** or **function**.
 
 <base-alert type="info">
 
@@ -208,6 +208,42 @@ export default {
   }
 </style>
 ```
+
+## Local scripts
+
+To load a *local js file* you can use a plugin or other options for a global availability. To load a script into a single individual page, please use the **static folder** within the head *object* or *function* or, if you want it integrated in your app to save requests, use Vue *import* and add it into your *components*:
+
+```
+<script>
+import CookiePolicy from '~/assets/gdpr/cookiepolicy.js'  //local js, remember to insert it in components
+export default {
+  components: {
+    CookiePolicy                                          // local js now available
+  }
+  head() {
+      return {
+        script: [
+          {
+            src:
+              '/jquery.min.js'                            // this looks for /static/jquery.min.js
+          }
+        ]
+      }
+  }
+}
+</script>
+```
+
+you may need to add a process.browser check if your script is not native and needs the *window* object:
+
+```
+//cookiepolicy.js:
+
+if (process.browser) {
+//your script here
+}
+```
+
 
 ## Resource Hints
 
